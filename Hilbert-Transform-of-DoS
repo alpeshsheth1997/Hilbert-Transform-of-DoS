@@ -1,0 +1,19 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import hilbert
+Energy = np.loadtxt( 'Energy.dat' )
+DoS = np.loadtxt( 'DoS.dat' )
+DoS_hilbert = hilbert(DoS)
+DoS_hilbert = np.imag(DoS_hilbert)
+DoS_hilbert = DoS_hilbert.tolist()
+highest_DoS_hilbert=max(DoS_hilbert)
+posMax=DoS_hilbert.index(highest_DoS_hilbert)
+upperDband=Energy[posMax]
+plt.scatter(Energy, DoS_hilbert)
+plt.ylabel('Imaginary')
+plt.xlabel('Real')
+plt.plot(Energy,DoS_hilbert, '.')
+plt.axvline(x=upperDband)
+plt.xlim([0,8])
+plt.show()
+print("upperDband",upperDband)
